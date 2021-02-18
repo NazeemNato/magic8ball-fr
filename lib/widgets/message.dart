@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:magicball/riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MessageBox extends StatelessWidget {
-  final TextEditingController controller;
-  final VoidCallback onPressed;
-  const MessageBox({
-    Key key,
-    @required this.controller,
-    @required this.onPressed,
-  }) : super(key: key);
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Row(
         children: [
           Expanded(
             child: TextField(
+              controller: _controller,
               style: GoogleFonts.montserrat(),
-              controller: controller,
               decoration: InputDecoration(
                 hintStyle: GoogleFonts.montserrat(),
                 hintText: 'Type your question here...',
@@ -27,24 +23,22 @@ class MessageBox extends StatelessWidget {
               ),
             ),
           ),
-          FlatButton(
-            child: Container(
-              child: Center(
-                child: Text(
-                  '✨',
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
-            ),
-            onPressed: onPressed,
-            // shape: CircleBorder(
-            //   side: BorderSide(
-            //     color: Colors.blue,
-            //   ),
-            // ),
-          )
+         IconButton(
+           icon: Icon(Icons.star),
+           iconSize: 30,
+           color: Colors.black87,
+           onPressed: (){
+              if (_controller.text.trim().isNotEmpty) {
+                submitQuestion(context, _controller.text);
+              }
+           },
+         )
         ],
       ),
     );
+  }
+
+  void submitQuestion(BuildContext context, String question) {
+    context.read(magicNotifierProvider).getResponse(question);
   }
 }
