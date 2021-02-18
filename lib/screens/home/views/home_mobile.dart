@@ -39,8 +39,7 @@ class _HomeMobileState extends State<HomeMobile> {
             ),
           ),
           MessageBox(
-            controller: _controller,
-            onPressed: predictMagic,
+            
           ),
           SizedBox(height: 50)
         ],

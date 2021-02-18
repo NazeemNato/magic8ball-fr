@@ -41,8 +41,7 @@ class _HomeTabletState extends State<HomeTablet> {
                 ),
               ),
               MessageBox(
-                controller: _controller,
-                onPressed:predictMagic
+               
               ),
               SizedBox(height: 50)
             ],

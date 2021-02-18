@@ -15,13 +15,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black87,
         title: Text(
-          '8 Magic Ball 🎱',
+          '8 Magic Ball',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.bold,
-            fontSize: 25,
-            color: Colors.black87,
+            fontSize: 25
           ),
         ),
       ),

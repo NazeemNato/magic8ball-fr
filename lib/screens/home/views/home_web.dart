@@ -1,32 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:magicball/constants/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:magicball/application/magic_state.dart';
+import 'package:magicball/models/magic_model.dart';
+import 'package:magicball/riverpod/riverpod.dart';
 import 'package:magicball/widgets/widgets.dart';
-import 'dart:math';
-import 'package:sentiment_dart/sentiment_dart.dart';
 
-class HomeWeb extends StatefulWidget {
-  HomeWeb({Key key}) : super(key: key);
-
-  @override
-  _HomeWebState createState() => _HomeWebState();
-}
-
-class _HomeWebState extends State<HomeWeb> {
-  TextEditingController _controller;
-  bool loader = false;
-  String magicText;
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-    magicText = 'Ask me a Yes or No question!';
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class HomeWeb extends StatelessWidget {
+  const HomeWeb({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,52 +16,72 @@ class _HomeWebState extends State<HomeWeb> {
         Expanded(flex: _size.width > 1340 ? 2 : 4, child: Container()),
         Expanded(
           flex: _size.width > 1340 ? 3 : 5,
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: loader
-                      ? MagicSpin()
-                      : MagicTextWidget(magicText: magicText),
-                ),
-              ),
-              MessageBox(
-                controller: _controller,
-                onPressed: predictMagic,
-              ),
-              SizedBox(height: 50)
-            ],
+          child: Consumer(
+            builder: (context, watch, child) {
+              final state = watch(magicNotifierProvider.state);
+              if (state is MagicInitialState) {
+                return buildInititalState();
+              } else if (state is MagicLoadingState) {
+                return buildLoading();
+              } else if (state is MagicLoadedState) {
+                return buildColumnWithData(state.magic);
+              } else {
+                return buildInititalState();
+              }
+            },
           ),
         ),
         Expanded(flex: _size.width > 1340 ? 2 : 4, child: Container()),
       ],
     );
   }
+}
 
-  void predictMagic() async {
-    if (_controller.text.isNotEmpty) {
-      var random = Random();
-      var sentiment = Sentiment();
-      setState(() {
-        loader = true;
-      });
-      var text = sentiment.analysis(_controller.text, emoji: true);
-      await Future.delayed(Duration(seconds: 3));
-      if (text['score'] >= 0) {
-        var word = randomResponse[random.nextInt(randomResponse.length)];
-        setState(() {
-          magicText = word;
-          loader = false;
-          _controller.clear();
-        });
-      } else {
-        var word = negativeResponse[random.nextInt(negativeResponse.length)];
-        setState(() {
-          magicText = word;
-          loader = false;
-          _controller.clear();
-        });
-      }
-    }
-  }
+Widget buildInititalState() {
+  return Column(
+    children: [
+      Expanded(
+        child: Center(
+          child: MagicTextWidget(
+            magicText: 'Ask me a Yes or No question!',
+          ),
+        ),
+      ),
+      MessageBox(),
+      SizedBox(height: 50)
+    ],
+  );
+}
+
+Widget buildLoading() {
+  return Center(
+    child: MagicSpin(),
+  );
+}
+
+Widget buildColumnWithData(Magic magic) {
+  return Column(
+    children: [
+      Expanded(
+        child: Column(
+          mainAxisAlignment:  MainAxisAlignment.center,
+          children: [
+            MagicTextWidget(
+              magicText: magic.question,
+              fontSize: 25.0,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            MagicTextWidget(
+              magicText: magic.response,
+              fontWeight: FontWeight.bold,
+            ),
+          ],
+        ),
+      ),
+      MessageBox(),
+      SizedBox(height: 50)
+    ],
+  );
 }
