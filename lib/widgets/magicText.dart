@@ -21,7 +21,7 @@ class MagicTextWidget extends StatelessWidget {
         textAlign: TextAlign.center,
         style: GoogleFonts.montserrat(
           fontSize: fontSize,
-          color: Colors.black87,
+          color: Colors.white,
           fontWeight: fontWeight,
         ),
       ),
