@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magicball/application/magic_state.dart';
-import 'package:magicball/models/magic_model.dart';
 import 'package:magicball/riverpod/riverpod.dart';
-import 'package:magicball/widgets/widgets.dart';
+import 'package:magicball/screens/home/views/components.dart';
 
 class HomeWeb extends StatelessWidget {
   const HomeWeb({Key key}) : super(key: key);
@@ -35,53 +34,4 @@ class HomeWeb extends StatelessWidget {
       ],
     );
   }
-}
-
-Widget buildInititalState() {
-  return Column(
-    children: [
-      Expanded(
-        child: Center(
-          child: MagicTextWidget(
-            magicText: 'Ask me a Yes or No question!',
-          ),
-        ),
-      ),
-      MessageBox(),
-      SizedBox(height: 50)
-    ],
-  );
-}
-
-Widget buildLoading() {
-  return Center(
-    child: MagicSpin(),
-  );
-}
-
-Widget buildColumnWithData(Magic magic) {
-  return Column(
-    children: [
-      Expanded(
-        child: Column(
-          mainAxisAlignment:  MainAxisAlignment.center,
-          children: [
-            MagicTextWidget(
-              magicText: magic.question,
-              fontSize: 25.0,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            MagicTextWidget(
-              magicText: magic.response,
-              fontWeight: FontWeight.bold,
-            ),
-          ],
-        ),
-      ),
-      MessageBox(),
-      SizedBox(height: 50)
-    ],
-  );
 }
