@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: Colors.black87,
         title: Text(
-          '8 Magic Ball',
+          'Magic Ball 8',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.bold,
             fontSize: 25

@@ -1,6 +1,6 @@
 import 'package:magicball/models/magic_model.dart';
 
-abstract class MagicState {
+abstract class MagicState { 
   const MagicState();
 }
 

@@ -29,17 +29,15 @@ Widget buildColumnWithData(Magic magic) {
   return Column(
     children: [
       Expanded(
-        child: Blob.random(
-          size: 400,
-          edgesCount: 6,
-          minGrowth: 9,
-          child: Container(
-            child: Column(
+        child:Center(
+           child:Container(
+              child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 MagicTextWidget(
                   magicText: magic.question,
                   fontSize: 25.0,
+                  color: Colors.black,
                 ),
                 SizedBox(
                   height: 5,
@@ -47,11 +45,11 @@ Widget buildColumnWithData(Magic magic) {
                 MagicTextWidget(
                   magicText: magic.response,
                   fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ],
             ),
-          ),
-        ),
+          ),),
       ),
       MessageBox(),
       SizedBox(height: 50)

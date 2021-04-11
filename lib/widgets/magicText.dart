@@ -7,11 +7,13 @@ class MagicTextWidget extends StatelessWidget {
     @required this.magicText,
     this.fontSize = 30.0,
     this.fontWeight = FontWeight.normal,
+    this.color = Colors.white,
   }) : super(key: key);
 
   final String magicText;
   final double fontSize;
   final FontWeight fontWeight;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class MagicTextWidget extends StatelessWidget {
         textAlign: TextAlign.center,
         style: GoogleFonts.montserrat(
           fontSize: fontSize,
-          color: Colors.white,
+          color: color,
           fontWeight: fontWeight,
         ),
       ),

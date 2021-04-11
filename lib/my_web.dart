@@ -9,7 +9,7 @@ class MyWeb extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
-        title: 'Magic 8 ball',
+        title: 'Magic ball 8',
         initialRoute: '/',
         routes: {
           '/': (context) => HomeScreen(),
